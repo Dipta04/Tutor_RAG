@@ -7,9 +7,11 @@ Retrieval-augmented tutor app. Teachers upload PDFs; students chat with the mate
 - `server/` — FastAPI, MongoDB, Pinecone, Groq
 - `client/` — Next.js 15 (TypeScript, Tailwind)
 
+**Live:** [Client](https://client-livid-two-qum1fdofw2.vercel.app/) · [Server](https://tutor-rag-s13o.onrender.com/)
+
 ## Setup
 
-**API keys** `.env` (MongoDB, Google, Pinecone, Groq).
+**API keys:** `.env` (MongoDB, Google, Pinecone, Groq).
 
 **Server**
 ```bash
