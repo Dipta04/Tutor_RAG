@@ -4,7 +4,7 @@
 
 Retrieval-augmented tutor app. Teachers upload PDFs; students chat with the material and take auto-generated quizzes.
 
-- `server/` — FastAPI, MongoDB, Pinecone, Groq
+- `server/` — Python, FastAPI, MongoDB, Pinecone, Groq
 - `client/` — Next.js 15 (TypeScript, Tailwind)
 
 **Live:** [Client](https://client-livid-two-qum1fdofw2.vercel.app/) · [Server](https://tutor-rag-s13o.onrender.com/)
