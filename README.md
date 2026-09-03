@@ -43,7 +43,5 @@ Browser → Next.js API routes → FastAPI. Auth is HTTP Basic; Next.js stores t
 
 ## Known limits
 
-- **`POST /upload_docs` has no server-side auth check** — client blocks non-teachers, but the API doesn't. Fix before deploying.
-- Quiz grading needs the model to emit `Correct Answer: X`; otherwise `/quiz` returns 502.
 - Uploads capped at 25MB; retrieval is a fixed `top_k=5`.
 - Google sign-in is implemented but untested end-to-end.
