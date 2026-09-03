@@ -1,5 +1,7 @@
 # TutorRAG
 
+![TutorRAG preview](preview.png)
+
 Retrieval-augmented tutor app. Teachers upload PDFs; students chat with the material and take auto-generated quizzes.
 
 - `server/` — FastAPI, MongoDB, Pinecone, Groq
@@ -7,14 +9,13 @@ Retrieval-augmented tutor app. Teachers upload PDFs; students chat with the mate
 
 ## Setup
 
-**Rotate your API keys first.** The original `.env` (MongoDB, Google, Pinecone, Groq) was committed to the repo — treat all four as compromised and change the MongoDB password too.
+**API keys** `.env` (MongoDB, Google, Pinecone, Groq).
 
 **Server**
 ```bash
 cd server
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env   # add rotated keys
 uvicorn main:app --reload --port 8000
 ```
 Requires a Pinecone index matching `models/gemini-embedding-001`.
@@ -23,7 +24,6 @@ Requires a Pinecone index matching `models/gemini-embedding-001`.
 ```bash
 cd client
 npm install
-cp .env.example .env.local
 npm run dev
 ```
 
