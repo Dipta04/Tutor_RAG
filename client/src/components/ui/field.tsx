@@ -1,6 +1,6 @@
 "use client";
 
-import type { InputHTMLAttributes, ReactNode, SelectHTMLAttributes } from "react";
+import type { InputHTMLAttributes, ReactNode } from "react";
 import { useState, useRef, useEffect } from "react";
 
 import { cn } from "@/lib/utils";
@@ -40,8 +40,16 @@ export function Select({
   children,
   value,
   onChange,
-  ...props
-}: SelectHTMLAttributes<HTMLSelectElement>) {
+  id,
+  disabled,
+}: {
+  className?: string;
+  children?: ReactNode;
+  value?: string | number;
+  onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  id?: string;
+  disabled?: boolean;
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   
@@ -83,14 +91,15 @@ export function Select({
   return (
     <div ref={containerRef} className="relative">
       <button
+        id={id}
         type="button"
+        disabled={disabled}
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
           controlClasses,
           "h-11 flex items-center justify-between",
           className
         )}
-        {...props}
       >
         <span>{selectedOption?.props?.children || value}</span>
         <IconChevronDown 

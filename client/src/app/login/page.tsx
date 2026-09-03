@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { LoginForm } from "@/components/auth/login-form";
-import { BrandMark } from "@/components/brand-mark";
 import { isGoogleEnabled } from "@/lib/google";
 
 // Read at request time so the Google keys can be set without a rebuild.
