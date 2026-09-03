@@ -1,0 +1,351 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --canvas: #0f0f0f;
+  --elevated: #171717;
+  --rail: #0a0a0a;
+  --surface: #1c1c1c;
+  --surface-hover: #262626;
+  --line: #2a2a2a;
+  --ink: #ececec;
+  --ink-muted: #9a9a9a;
+  --ink-faint: #6b6b6b;
+  --accent: #4f8cff;
+  --accent-hover: #6b9dff;
+  --positive: #3fb950;
+  --negative: #f0616d;
+  /* Tailwind's default font slot is named "sans"; the value here is a serif
+     stack. Tinos and Liberation Serif are metric-compatible stand-ins for
+     Times New Roman on machines that do not ship it. */
+  --font-sans: "Times New Roman", Times, Tinos, "Liberation Serif", "Nimbus Roman",
+    "Noto Serif", serif;
+  color-scheme: dark;
+}
+
+:root.light {
+  --canvas: #ffffff;
+  --elevated: #fbfbfb;
+  --rail: #f6f6f6;
+  --surface: #f1f1f1;
+  --surface-hover: #e6e6e6;
+  --line: #e2e2e2;
+  --ink: #1a1a1a;
+  --ink-muted: #6b6b6b;
+  --ink-faint: #8f8f8f;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --positive: #1a7f37;
+  --negative: #cf222e;
+  color-scheme: light;
+}
+
+@layer base {
+  * {
+    border-color: var(--line);
+  }
+
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    background-color: var(--canvas);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: #fff;
+  }
+}
+
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--line) transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: var(--line);
+    border-radius: 999px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Smooth animations for dropdowns */
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes zoom-in {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .animate-in {
+    animation-duration: 150ms;
+    animation-timing-function: ease-out;
+    animation-fill-mode: both;
+  }
+
+  .fade-in-0 {
+    animation-name: fade-in;
+  }
+
+  .zoom-in-95 {
+    animation-name: zoom-in;
+  }
+
+  .duration-150 {
+    animation-duration: 150ms;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow-pill__ring {
+    background: var(--glow-base);
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- spectrum border ---------- */
+
+.neon-edge,
+.neon-bloom {
+  background: conic-gradient(
+    from 210deg,
+    #8b7bd8 0deg,
+    #6f8fd6 70deg,
+    #5aa88f 140deg,
+    #c9a45c 210deg,
+    #cf7a72 280deg,
+    #8b7bd8 360deg
+  );
+}
+
+.neon-bloom {
+  filter: blur(26px);
+  opacity: 0.5;
+  transform: scale(0.97);
+}
+
+:root.light .neon-bloom {
+  opacity: 0.35;
+}
+
+/* ---------- hero backdrop ---------- */
+
+.star-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.star-drift {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 200%;
+  animation: star-drift 150s linear infinite;
+  will-change: transform;
+}
+
+.star-layer {
+  position: relative;
+  height: 50%;
+}
+
+.star-layer span {
+  position: absolute;
+  border-radius: 999px;
+  background: #ffffff;
+}
+
+.star-layer span.is-twinkling {
+  opacity: var(--star-dim);
+  animation: star-twinkle var(--star-duration) ease-in-out infinite;
+  animation-delay: var(--star-delay);
+}
+
+@keyframes star-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
+@keyframes star-twinkle {
+  0%,
+  100% {
+    opacity: var(--star-dim);
+  }
+  50% {
+    opacity: var(--star-bright);
+  }
+}
+
+:root.light .star-field {
+  opacity: 0;
+}
+
+/* ---------- light-mode grid pattern ---------- */
+
+.light-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 20%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 20%, transparent 80%);
+}
+
+:root.light .light-grid {
+  opacity: 0.6;
+}
+
+.hero-beam {
+  position: absolute;
+  left: -18%;
+  top: -70%;
+  height: 150%;
+  width: 85%;
+  pointer-events: none;
+  background: radial-gradient(
+    50% 50% at 32% 42%,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.07) 42%,
+    transparent 70%
+  );
+  transform: rotate(20deg);
+  filter: blur(14px);
+}
+
+:root.light .hero-beam {
+  background: radial-gradient(50% 50% at 32% 42%, rgba(79, 140, 255, 0.14) 0%, transparent 70%);
+}
+
+/* ---------- pill with a travelling border light ---------- */
+
+.glow-pill {
+  --glow-base: var(--line);
+  --glow-arc: #7ea6ff;
+  --glow-tip: #dfe9ff;
+  position: relative;
+  display: inline-flex;
+  overflow: hidden;
+  border-radius: 999px;
+  padding: 1px;
+  isolation: isolate;
+}
+
+.glow-pill--sm .glow-pill__face {
+  height: 2rem;
+  padding: 0 0.85rem;
+  font-size: 0.8125rem;
+  gap: 0.35rem;
+}
+
+.glow-pill__ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 260%;
+  aspect-ratio: 1 / 1;
+  translate: -50% -50%;
+  background: conic-gradient(
+    from 0deg,
+    var(--glow-base) 0deg 248deg,
+    var(--glow-arc) 300deg,
+    var(--glow-tip) 328deg,
+    var(--glow-arc) 346deg,
+    var(--glow-base) 360deg
+  );
+  animation: glow-orbit 3.6s linear infinite;
+  will-change: transform;
+}
+
+.glow-pill__face {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border-radius: 999px;
+  padding: 0 1.4rem;
+  height: 2.75rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background-color 150ms ease;
+}
+
+.glow-pill:hover .glow-pill__face {
+  background-color: var(--surface-hover);
+}
+
+.glow-pill:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@keyframes glow-orbit {
+  from {
+    rotate: 0deg;
+  }
+  to {
+    rotate: 360deg;
+  }
+}
+
+/* ---------- headline word chips ---------- */
+
+.word-chip {
+  border-radius: 12px;
+  background: var(--surface);
+  padding: 0.04em 0.28em;
+  box-shadow: inset 0 0 0 1px var(--line);
+}
